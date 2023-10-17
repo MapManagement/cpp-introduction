@@ -38,16 +38,29 @@ vector<int> read_file_as_int_vector(string filepath) {
   vector<int> input_vector = {};
 
   while (getline(TargetFile, line)) {
-    /*int line_break_pos = line.find("\n");
-    cout << line_break_pos;
+    int value = stoi(line);
+    input_vector.push_back(value);
+  }
 
-    if (line_break_pos == string::npos)
-      continue;
+  TargetFile.close();
 
-    line.erase(line_break_pos, line_break_pos + 2);*/
+  return input_vector;
+}
 
-    int depth = stoi(line);
-    input_vector.push_back(depth);
+vector<string> read_file_as_string_vector(string filepath) {
+  string line;
+  string filetext = "";
+
+  ifstream TargetFile(filepath);
+
+  if (!TargetFile) {
+    cout << "File has not been found";
+  }
+
+  vector<string> input_vector = {};
+
+  while (getline(TargetFile, line)) {
+    input_vector.push_back(line);
   }
 
   TargetFile.close();
