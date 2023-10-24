@@ -7,7 +7,7 @@
 using namespace std;
 
 string read_file_as_string(string filepath);
-vector<int> read_file_as_int_vector(string filepath);
+vector<int> read_file_as_int_vector(string filepath, int base);
 vector<string> read_file_as_string_vector(string filepath);
 
 #endif

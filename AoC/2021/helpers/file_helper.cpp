@@ -25,7 +25,7 @@ string read_file_as_string(string filepath) {
   return filetext;
 }
 
-vector<int> read_file_as_int_vector(string filepath) {
+vector<int> read_file_as_int_vector(string filepath, int base = 10) {
   string line;
   string filetext = "";
 
@@ -38,7 +38,7 @@ vector<int> read_file_as_int_vector(string filepath) {
   vector<int> input_vector = {};
 
   while (getline(TargetFile, line)) {
-    int value = stoi(line);
+    int value = stoi(line, nullptr, base);
     input_vector.push_back(value);
   }
 
