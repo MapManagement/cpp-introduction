@@ -26,13 +26,12 @@ int get_max_exponent(vector<int> elements) {
 }
 
 int invert_bits(int number) {
-  int inverted_number = number;
   int x = log2(number) + 1;
 
   for (int i = 0; i < x; i++)
-    inverted_number = (number ^ (1 << i));
+    number = (number ^ (1 << i));
 
-  return inverted_number;
+  return number;
 }
 
 int calculate_power_consumption() {
