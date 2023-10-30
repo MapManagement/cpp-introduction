@@ -1,4 +1,5 @@
 #include "../helpers/file_helper.h"
+#include <bitset>
 #include <cmath>
 #include <iostream>
 #include <ostream>
@@ -21,17 +22,22 @@ int get_max_exponent(vector<int> elements) {
       max = elements[i];
   }
 
-  return ceil(log2(max)) - 1;
+  return ceil(log2(max));
+}
+
+int invert_bits(int number) {
+  int inverted_number = number;
+  int x = log2(number) + 1;
+
+  for (int i = 0; i < x; i++)
+    inverted_number = (number ^ (1 << i));
+
+  return inverted_number;
 }
 
 int calculate_power_consumption() {
   vector<int> input = get_input_vector();
   int digit_length = get_max_exponent(input);
-  cout << input[0];
-  cout << endl;
-
-  cout << digit_length;
-  cout << endl;
 
   int gamma_rate = 0;
   int number_ones = 0;
@@ -42,18 +48,17 @@ int calculate_power_consumption() {
     number_zeros = 0;
 
     for (int i = 0; i < input.size(); i++) {
-      int pattern = pow(2, digit_length - j);
+      int pattern = pow(2, digit_length - j - 1);
       int match = input[i] & pattern;
-       cout << match;
-       cout << endl;
 
       if (match == pattern)
         number_ones++;
-      else
+      else {
         number_zeros++;
+      }
 
       if ((number_ones > input.size() / 2)) {
-        gamma_rate += pow(2, digit_length - 1);
+        gamma_rate += pow(2, digit_length - j - 1);
         break;
       }
 
@@ -62,7 +67,13 @@ int calculate_power_consumption() {
     }
   }
 
-  return gamma_rate * (~gamma_rate);
+  cout << std::bitset<5>(gamma_rate);
+  cout << endl;
+
+  cout << std::bitset<5>(invert_bits(gamma_rate));
+  cout << endl;
+
+  return gamma_rate * invert_bits(gamma_rate);
 }
 
 void first_task() {
