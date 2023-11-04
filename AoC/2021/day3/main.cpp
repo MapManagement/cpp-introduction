@@ -2,6 +2,7 @@
 #include <bitset>
 #include <cmath>
 #include <iostream>
+#include <iterator>
 #include <ostream>
 #include <string>
 #include <vector>
@@ -66,13 +67,42 @@ int calculate_power_consumption() {
     }
   }
 
-  cout << std::bitset<5>(gamma_rate);
-  cout << endl;
-
-  cout << std::bitset<5>(invert_bits(gamma_rate));
-  cout << endl;
-
   return gamma_rate * invert_bits(gamma_rate);
+}
+
+vector<int> calculate_rating(vector<int> ratings, bool mode, int digit_length) {
+  vector<int> one_ratings = {};
+  vector<int> zero_ratings = {};
+
+  int number_ones = 0;
+  int number_zeros = 0;
+
+  for (int i = 0; i < ratings.size(); i++) {
+    int pattern = pow(2, digit_length - 1);
+    int match = ratings[i] & pattern;
+
+    if (match == pattern) {
+      one_ratings.push_back(ratings[i]);
+    } else {
+      zero_ratings.push_back(ratings[i]);
+    }
+  }
+
+  bool return_ones = ((one_ratings.size() >= zero_ratings.size() && mode) ||
+                      (one_ratings.size() < zero_ratings.size() && !mode));
+
+  if (return_ones) {
+    if (one_ratings.size() == 1)
+      return one_ratings;
+
+    return calculate_rating(one_ratings, mode, digit_length - 1);
+  } else {
+
+    if (zero_ratings.size() == 1)
+      return zero_ratings;
+
+    return calculate_rating(zero_ratings, mode, digit_length - 1);
+  }
 }
 
 void first_task() {
@@ -80,7 +110,14 @@ void first_task() {
   cout << power_consumption;
 }
 
-void second_task() {}
+void second_task() {
+  vector<int> input = get_input_vector();
+  int digit_length = get_max_exponent(input);
+  vector<int> oxygen_rating = calculate_rating(input, true, digit_length);
+  vector<int> co2_rating = calculate_rating(input, false, digit_length);
+
+  cout << oxygen_rating[0] * co2_rating[0] << endl;
+}
 
 int main() {
   first_task();
