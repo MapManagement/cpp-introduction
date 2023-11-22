@@ -23,4 +23,6 @@ int main() {
     std::cin >> number;
 
     collatz(number);
+
+    return 0;
 }

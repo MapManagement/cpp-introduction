@@ -50,4 +50,6 @@ int main() {
     std::string output = calcX(input.p, input.q);
 
     std::cout << output << std::endl;
+
+    return 0;
 }

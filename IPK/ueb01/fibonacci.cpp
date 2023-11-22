@@ -39,4 +39,6 @@ int main() {
               << std::endl;
     std::cout << "Rekursiv: " + std::to_string(resultRec) << std::endl;
     std::cout << "Iterativ: " + std::to_string(resultIter) << std::endl;
+
+    return 0;
 }
