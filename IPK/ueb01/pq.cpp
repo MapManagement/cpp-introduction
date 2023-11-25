@@ -26,7 +26,7 @@ float calcDiscriminant(float p, float q) {
     return result;
 }
 
-std::string calcX(float p, float q) {
+std::string calcSolution(float p, float q) {
     float discriminant = calcDiscriminant(p, q);
 
     if (discriminant < 0) {
@@ -47,7 +47,7 @@ std::string calcX(float p, float q) {
 int main() {
     Input input = readInput();
 
-    std::string output = calcX(input.p, input.q);
+    std::string output = calcSolution(input.p, input.q);
 
     std::cout << output << std::endl;
 

@@ -11,13 +11,13 @@ void collatz(unsigned int number) {
         } else {
             number = number * 3 + 1;
         }
+        std::cout << number << std::endl;
     }
-
-    std::cout << number << std::endl;
 }
 
 int main() {
-    std::cout << "Geben Sie eine Zahl für die Collatz-Funktion: " << std::endl;
+    std::cout << "Geben Sie eine Zahl für die Collatz-Funktion an: "
+              << std::endl;
 
     int number = 0;
     std::cin >> number;
