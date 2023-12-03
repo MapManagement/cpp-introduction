@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 #include <iostream>
 #include <ostream>
 #include <string>
@@ -8,6 +9,7 @@
 
 unsigned int leben = 10;
 
+// a)
 std::string verstecken(std::string wort) {
     std::string verstecktesWort = "";
 
@@ -18,6 +20,7 @@ std::string verstecken(std::string wort) {
     return verstecktesWort;
 }
 
+// b)
 bool aufdecken(std::string &stand, std::string loesung, char buchstabe) {
     bool treffer = false;
 
@@ -33,6 +36,7 @@ bool aufdecken(std::string &stand, std::string loesung, char buchstabe) {
     return treffer;
 }
 
+// c)
 bool istFertig(std::string zustand, std::string loesung) {
     char vergleichszeichen = '_';
 
@@ -44,6 +48,7 @@ bool istFertig(std::string zustand, std::string loesung) {
     return zustandUnterstriche == loesungUnterstriche;
 }
 
+// d)
 void gameLoop(std::string loesung) {
     std::string zustand = verstecken(loesung);
 
@@ -73,17 +78,44 @@ void gameLoop(std::string loesung) {
         bool spielGewonnen = istFertig(zustand, loesung);
 
         if (spielGewonnen) {
-            std::cout
-                << "Du hast das Wort '" << loesung << "' erraten und damit das Spiel gewonnen."
-                << std::endl;
+            std::cout << "Du hast das Wort '" << loesung
+                      << "' erraten und damit das Spiel gewonnen." << std::endl;
             break;
         }
     }
 }
 
+// f)
+void readFiles(std::vector<std::string> &woerter) {
+    woerter.clear();
+
+    std::ifstream file;
+    file.open("wortliste.txt");
+
+    std::string letztesWort;
+
+    while (true) {
+        std::string aktuellesWort;
+        file >> aktuellesWort;
+
+        if (aktuellesWort == letztesWort) {
+            break;
+        }
+
+        woerter.push_back(aktuellesWort);
+
+        letztesWort = aktuellesWort;
+    }
+
+    file.close();
+}
+
+// e)
 int main() {
     std::vector<std::string> words = {"Programmierkurs", "Informatik",
                                       "Heidelberg", "Softwareentwicklung"};
+    // f)
+    readFiles(words);
 
     std::srand(std::time(nullptr));
 
@@ -91,4 +123,6 @@ int main() {
     int wortIndex = zufallInt % words.size();
 
     gameLoop(words[wortIndex]);
+
+    return 0;
 }
