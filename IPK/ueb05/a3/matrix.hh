@@ -3,91 +3,111 @@
 #include <ostream>
 #include <stdexcept>
 template <typename T, int columns, int rows> class Matrix {
-  std::array<std::array<T, columns>, rows> storage;
+    std::array<std::array<T, columns>, rows> storage;
 
-public:
-  // a)
-  Matrix() {
-    for (int i = 0; i < rows; ++i) {
-      for (int j = 0; j < columns; ++j) {
-        storage[i][j] = 0;
-      }
-    }
-  }
-
-  template <typename X> Matrix(X container) {
-    for (int i = 0; i < rows; ++i) {
-      for (int j = 0; j < columns; ++j) {
-        storage[i][j] = container[i][j];
-      }
-    }
-  }
-
-  // a)
-  void print() {
-    for (int i = 0; i < rows; ++i) {
-      for (int j = 0; j < columns; ++j) {
-        std::cout << storage[i][j];
-
-        if (j != columns - 1) {
-          std::cout << " ";
+    public:
+    // a)
+    Matrix() {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < columns; ++j) {
+                storage[i][j] = 0;
+            }
         }
-      }
-      std::cout << std::endl;
-    }
-  }
-
-  // a)
-  int &get(unsigned int row, unsigned int column) {
-    if (row > rows) {
-      throw std::out_of_range("Not enough rows");
     }
 
-    if (column > columns) {
-      throw std::out_of_range("Not enough columns");
+    // e)
+    template <typename X> Matrix(X container) {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < columns; ++j) {
+                storage[i][j] = container[i][j];
+            }
+        }
     }
 
-    return storage[row][column];
-  }
+    // a)
+    void print() {
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < columns; ++j) {
+                std::cout << storage[i][j];
 
-  // b)
-  Matrix<T, rows, columns> transpose() {
-    Matrix<T, rows, columns> transponierteMatrix;
-
-    for (int i = 0; i < rows; ++i) {
-      for (int j = 0; j < columns; ++j) {
-        transponierteMatrix.get(j, i) = storage[i][j];
-      }
+                if (j != columns - 1) {
+                    std::cout << " ";
+                }
+            }
+            std::cout << std::endl;
+        }
     }
 
-    return transponierteMatrix;
-  }
+    // a)
+    int &get(unsigned int row, unsigned int column) {
+        if (row > rows) {
+            throw std::out_of_range("Not enough rows");
+        }
 
-  // c)
-  Matrix<T, columns, rows> add(Matrix<T, columns, rows> matrix) {
-    Matrix<T, columns, rows> summeMatrix;
+        if (column > columns) {
+            throw std::out_of_range("Not enough columns");
+        }
 
-    for (int i = 0; i < rows; ++i) {
-      for (int j = 0; j < columns; ++j) {
-        summeMatrix.get(i, j) = storage[i][j] + matrix.get(i, j);
-      }
+        return storage[row][column];
     }
 
-    return summeMatrix;
-  }
+    // b)
+    Matrix<T, rows, columns> transpose() {
+        Matrix<T, rows, columns> transponierteMatrix;
 
-  // c)
-  Matrix<T, columns, rows> subtract(Matrix<T, columns, rows> matrix) {
-    Matrix<T, columns, rows> differenzMatrix;
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < columns; ++j) {
+                transponierteMatrix.get(j, i) = storage[i][j];
+            }
+        }
 
-    for (int i = 0; i < rows; ++i) {
-      for (int j = 0; j < columns; ++j) {
-        differenzMatrix.get(i, j) = storage[i][j] - matrix.get(i, j);
-      }
+        return transponierteMatrix;
     }
 
-    return differenzMatrix;
-  }
+    // c)
+    Matrix<T, columns, rows> add(Matrix<T, columns, rows> matrix) {
+        Matrix<T, columns, rows> summeMatrix;
 
-  // d)
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < columns; ++j) {
+                summeMatrix.get(i, j) = storage[i][j] + matrix.get(i, j);
+            }
+        }
+
+        return summeMatrix;
+    }
+
+    // c)
+    Matrix<T, columns, rows> subtract(Matrix<T, columns, rows> matrix) {
+        Matrix<T, columns, rows> differenzMatrix;
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < columns; ++j) {
+                differenzMatrix.get(i, j) = storage[i][j] - matrix.get(i, j);
+            }
+        }
+
+        return differenzMatrix;
+    }
+
+    // d) Hier hat sich eventuell ein Fehler eingeschlichen
+    template <int new_columns>
+    Matrix<T, new_columns, rows>
+    multiply(Matrix<T, new_columns, columns> matrix) {
+        Matrix<T, new_columns, rows> produktMatrix;
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < new_columns; ++j) {
+                T sum = 0;
+
+                for (int k = 0; k < columns; ++k) {
+                    sum += matrix.get(j, k) * storage[k][i];
+                }
+
+                produktMatrix.get(i, j) = sum;
+            }
+        }
+
+        return produktMatrix;
+    }
 };
