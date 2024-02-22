@@ -30,7 +30,7 @@ double FachListe::durchschnitt() {
             anzahlFaecherBestanden++;
         }
     }
-    
+
     if (anzahlFaecherBestanden < 1)
         return 0;
 

@@ -5,21 +5,23 @@
 #include <string>
 
 class Fach {
-private:
+    private:
     std::string kuerzel;
     std::string name;
     unsigned int ects;
     double note;
 
-public:
+    public:
     // legt neues Fach mit Standardnote 0.0 (= nicht teilgenommen) an
     Fach(std::string name, std::string kuerzel, unsigned int ects);
-    
-    // trägt eine Note für das Fach ein, wenn diese zwischen 1.0 und 5.0 ist und das Fach noch nicht bestanden ist
-    // gibt genau dann true zurück, wenn das funktioniert hat
+
+    // trägt eine Note für das Fach ein, wenn diese zwischen 1.0 und 5.0 ist und
+    // das Fach noch nicht bestanden ist gibt genau dann true zurück, wenn das
+    // funktioniert hat
     bool noteEintragen(double note);
 
-    // ein Fach ist bestanden, wenn eine valide Note eingetragen, und diese besser oder gleich 4.0 ist
+    // ein Fach ist bestanden, wenn eine valide Note eingetragen, und diese
+    // besser oder gleich 4.0 ist
     bool bestanden() const;
 
     // gibt die Note mal ECTS zurück, wenn das Fach bestanden ist, sonst 0
@@ -27,7 +29,7 @@ public:
 
     // gibt ECTS zurück, wenn Fach bestanden ist, sonst 0
     unsigned int getECTS() const;
-    
+
     // gibt name zurück
     std::string getName() const;
 
